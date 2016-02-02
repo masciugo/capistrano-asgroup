@@ -24,18 +24,11 @@ will need access to the Amazon AWS API.  It is recommended to use IAM to create 
 with limited capabilities for this type of purpose. Specify the following in your
 Capistrano configuration:
 
+You can use aws-sdk credentials described in [AWS docs](http://docs.aws.amazon.com/sdkforruby/api/index.html)
 ```ruby
 set :aws_access_key_id, ENV['AWS_ACCESS_KEY_ID']
 set :aws_secret_access_key, ENV['AWS_SECRET_ACCESS_KEY']
 ```
-
-or the less secure option to keep the keys in code:
-
-```ruby
-set :aws_access_key_id, '...'
-set :aws_secret_access_key, '...'
-```
-
 
 ### Get the gem
 
@@ -76,13 +69,15 @@ Instead of manually defining the hostnames to deploy to like this:
 
 ```ruby
 set :aws_region, 'eu-west-1' # set the region of AWS
-role :web, 'mysever1.example.com','myserver2.example.com'
+
+set :aws_region, "us-west-1"
+set :asgroup_use_private_ips, true
 ```
 
-Simple do this where <my-autoscale-group-name> is the name of an autoscale group:
+Simple do this where <my-autoscale-group-name> is the name of an autoscale group, with optional role:
 
 ```ruby
-asgroupname '<my-autoscale-group-name>', :web
+Capistrano::Asgroup.addInstances("<my-autoscale-group-name>"[, role])
 ```
 
 So instead of:
@@ -100,7 +95,7 @@ You would do:
 require 'capistrano/asgroup'
 
 task :production do
-  asgroupname 'production-github-web', :web
+  Asgroup.addInstances("my-asg-name", :web)
   logger.info 'Deploying to the PRODUCTION environment!'
 end
 ```
@@ -116,5 +111,5 @@ set :asgroup_use_private_ips, true
 
 ## License
 
-capistrano-asgroup is copyright 2013 by [Thomas Verbiscer](http://tom.verbiscer.com/), released under the MIT License (see LICENSE for details).
-
+Originally developed by:
+[Thomas Verbiscer](http://tom.verbiscer.com/), released under the MIT License
