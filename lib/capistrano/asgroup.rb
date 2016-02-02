@@ -39,9 +39,9 @@ module Capistrano
                 reservation[:instances].delete_if{ |a| not @asGroupInstanceIds.include?(a[:instance_id]) or a[:state][:name] != "running" }.each do |instance|
                     puts "Found ASG #{which} Instance ID: #{instance[:instance_id]} in VPC: #{instance[:vpc_id]}"
                     if true == fetch(:asgroup_use_private_ips)
-                        server(instance[:private_ip_address], args)
+                        server(instance[:private_ip_address], *args)
                     else
-                        server(instance[:public_ip_address], args)
+                        server(instance[:public_ip_address], *args)
                     end
 
                 end
