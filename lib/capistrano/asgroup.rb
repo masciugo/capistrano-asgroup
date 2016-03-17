@@ -19,7 +19,6 @@ module Capistrano
               set :asgroup_use_private_ips, false
             end
 
-            # WHY 2 CLIENTS ???
             @ec2_api = Aws::EC2::Client.new(
               access_key_id: fetch(:aws_access_key_id),
               secret_access_key: fetch(:aws_secret_access_key),
@@ -35,7 +34,7 @@ module Capistrano
             # Find the right Auto Scaling group
             @autoScaleDesc[:auto_scaling_groups].each do |asGroup|
                 # Look for an exact name match or Cloud Formation style match (<cloud_formation_script>-<as_name>-<generated_id>)
-                if asGroup[:auto_scaling_group_name] == which or asGroup[:auto_scaling_group_name].scan("#{}{which}").length > 0
+                if asGroup[:auto_scaling_group_name] == which
                     # For each instance in the Auto Scale group
                     asGroup[:instances].each do |asInstance|
                         @asGroupInstanceIds.push(asInstance[:instance_id])
@@ -49,19 +48,19 @@ module Capistrano
             # figure out the instance IP's
             server_as_db_defined = false
             @ec2DescInst[:reservations].each do |reservation| # RESERVATION IS ALWAYS 1???
-                #remove instances that are either not in this asGroup or not in the "running" state # DOES THIS LOGIC FIT???
+                #remove instances that are either not in this asGroup or not in the "running" state
                 reservation[:instances].delete_if{ |a| not @asGroupInstanceIds.include?(a[:instance_id]) or a[:state][:name] != "running" }.each do |instance|
                     puts "Found ASG #{which} Instance ID: #{instance[:instance_id]} in VPC: #{instance[:vpc_id]}"
                     options = {
                       user: fetch(:user),
                       roles: [:app, :web]
                     }
-                    unless server_as_db_defined # ONLY THE FIRST SERVER RUN MIGRATION RIGHT???
+                    unless server_as_db_defined
                       server_as_db_defined = true
                       options[:roles] << :db
                       options[:primary] = true
                     end
-                    ip = if true == fetch(:asgroup_use_private_ips) # WHAT'S THIS???
+                    ip = if true == fetch(:asgroup_use_private_ips)
                         instance[:private_ip_address]
                     else
                         instance[:public_ip_address]
