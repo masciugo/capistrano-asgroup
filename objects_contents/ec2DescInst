@@ -1,0 +1,114 @@
+#<struct Aws::EC2::Types::DescribeInstancesResult
+ reservations=
+  [#<struct Aws::EC2::Types::Reservation
+    reservation_id="r-b7320611",
+    owner_id="941310464861",
+    requester_id="226008221399",
+    groups=[],
+    instances=
+     [#<struct Aws::EC2::Types::Instance
+       instance_id="i-9b2da713",
+       image_id="ami-5a0bb329",
+       state=#<struct Aws::EC2::Types::InstanceState code=16, name="running">,
+       private_dns_name="ip-10-129-253-144.eu-west-1.compute.internal",
+       public_dns_name="",
+       state_transition_reason="",
+       key_name="vint-KeyPair",
+       ami_launch_index=0,
+       product_codes=[],
+       instance_type="t2.medium",
+       launch_time=2016-03-10 15:56:36 UTC,
+       placement=
+        #<struct Aws::EC2::Types::Placement
+         availability_zone="eu-west-1c",
+         group_name="",
+         tenancy="default",
+         host_id=nil,
+         affinity=nil>,
+       kernel_id=nil,
+       ramdisk_id=nil,
+       platform=nil,
+       monitoring=#<struct Aws::EC2::Types::Monitoring state="enabled">,
+       subnet_id="subnet-6e6b3b0b",
+       vpc_id="vpc-c6f74ba3",
+       private_ip_address="10.129.253.144",
+       public_ip_address=nil,
+       state_reason=nil,
+       architecture="x86_64",
+       root_device_type="ebs",
+       root_device_name="/dev/sda1",
+       block_device_mappings=
+        [#<struct Aws::EC2::Types::InstanceBlockDeviceMapping
+          device_name="/dev/sda1",
+          ebs=
+           #<struct Aws::EC2::Types::EbsInstanceBlockDevice
+            volume_id="vol-f58ccb37",
+            status="attached",
+            attach_time=2016-03-10 15:56:36 UTC,
+            delete_on_termination=true>>],
+       virtualization_type="hvm",
+       instance_lifecycle=nil,
+       spot_instance_request_id=nil,
+       client_token="317583f5-1d2b-4069-8f42-c45882f24ae9_subnet-6e6b3b0b_1",
+       tags=
+        [#<struct Aws::EC2::Types::Tag key="Role", value="Frontend-Server">,
+         #<struct Aws::EC2::Types::Tag key="Production", value="True">,
+         #<struct Aws::EC2::Types::Tag
+          key="Name",
+          value="Place-Production-Frontend-Server">,
+         #<struct Aws::EC2::Types::Tag key="Project", value="Place">,
+         #<struct Aws::EC2::Types::Tag
+          key="aws:autoscaling:groupName",
+          value="ASG-Place-Frontend-Group">],
+       security_groups=
+        [#<struct Aws::EC2::Types::GroupIdentifier
+          group_name="secg_http_https",
+          group_id="sg-6ea7850a">,
+         #<struct Aws::EC2::Types::GroupIdentifier
+          group_name="secg-ssh",
+          group_id="sg-8b113fef">,
+         #<struct Aws::EC2::Types::GroupIdentifier
+          group_name="secg_Database",
+          group_id="sg-bc67cad8">],
+       source_dest_check=true,
+       hypervisor="xen",
+       network_interfaces=
+        [#<struct Aws::EC2::Types::InstanceNetworkInterface
+          network_interface_id="eni-bf61b2c6",
+          subnet_id="subnet-6e6b3b0b",
+          vpc_id="vpc-c6f74ba3",
+          description="",
+          owner_id="941310464861",
+          status="in-use",
+          mac_address="02:50:9c:8a:2f:21",
+          private_ip_address="10.129.253.144",
+          private_dns_name="ip-10-129-253-144.eu-west-1.compute.internal",
+          source_dest_check=true,
+          groups=
+           [#<struct Aws::EC2::Types::GroupIdentifier
+             group_name="secg_http_https",
+             group_id="sg-6ea7850a">,
+            #<struct Aws::EC2::Types::GroupIdentifier
+             group_name="secg-ssh",
+             group_id="sg-8b113fef">,
+            #<struct Aws::EC2::Types::GroupIdentifier
+             group_name="secg_Database",
+             group_id="sg-bc67cad8">],
+          attachment=
+           #<struct Aws::EC2::Types::InstanceNetworkInterfaceAttachment
+            attachment_id="eni-attach-9087f674",
+            device_index=0,
+            status="attached",
+            attach_time=2016-03-10 15:56:36 UTC,
+            delete_on_termination=true>,
+          association=nil,
+          private_ip_addresses=
+           [#<struct Aws::EC2::Types::InstancePrivateIpAddress
+             private_ip_address="10.129.253.144",
+             private_dns_name="ip-10-129-253-144.eu-west-1.compute.internal",
+             primary=true,
+             association=nil>]>],
+       iam_instance_profile=nil,
+       ebs_optimized=false,
+       sriov_net_support=nil>]>],
+ next_token=nil>
