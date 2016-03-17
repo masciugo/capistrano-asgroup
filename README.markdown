@@ -1,18 +1,22 @@
 ## Introduction
 
+LAST DISCLAIMER BY MASCIUGO:
+THIS IS AN ADAPTATION OF [THIS PROJECT](https://github.com/teu/capistrano-asgroup) IN ORDER TO WORK LIKE
+[THIS OTHER PROJECT](https://github.com/gtforge/capistrano-autoscale-deploy) WHICH, MOREVOER, WAS FOR CAPISTRANO 2 ONLY
+
 Disclaimer:
 This a continuation of Thomas Verbiscer project https://github.com/tverbiscer/capistrano-asgroup which seams to be abandonned.
 
 capistrano-asgroup is a [Capistrano](https://github.com/capistrano/capistrano) plugin designed to simplify the
 task of deploying to infrastructure hosted on [Amazon EC2](http://aws.amazon.com/ec2/). It was
-completely inspired by the [capistrano-ec2group](https://github.com/logandk/capistrano-ec2group) and 
+completely inspired by the [capistrano-ec2group](https://github.com/logandk/capistrano-ec2group) and
 [capistrano-ec2tag](https://github.com/douglasjarquin/capistrano-ec2tag) plugins, to which all credit is due.
 
 Both of the prior plugins gave you "a way" to deploy using Capistrano to AWS Auto Scaling groups but both
 required you to do so in a non-straightforward manner by putting your Auto Scaling group in its own
-security group or by providing a unique tag for your Auto Scaling group.  This plugin simply takes the 
+security group or by providing a unique tag for your Auto Scaling group.  This plugin simply takes the
 name of the Auto Scaling group and uses that to find the Auto Scaling instances that it should deploy to.  It will
-work with straight up hand created Auto Scaling groups (exact match of the AS group name) or with 
+work with straight up hand created Auto Scaling groups (exact match of the AS group name) or with
 Cloud Formation created Auto Scaling groups (looking for the name in the Cloud Formation format).
 
 ## Installation
