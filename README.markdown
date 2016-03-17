@@ -4,9 +4,6 @@ LAST DISCLAIMER BY MASCIUGO:
 THIS IS AN ADAPTATION OF [THIS PROJECT](https://github.com/teu/capistrano-asgroup) IN ORDER TO WORK LIKE
 [THIS OTHER PROJECT](https://github.com/gtforge/capistrano-autoscale-deploy) WHICH, MOREVOER, WAS FOR CAPISTRANO 2 ONLY
 
-Disclaimer:
-This a continuation of Thomas Verbiscer project https://github.com/tverbiscer/capistrano-asgroup which seams to be abandonned.
-
 capistrano-asgroup is a [Capistrano](https://github.com/capistrano/capistrano) plugin designed to simplify the
 task of deploying to infrastructure hosted on [Amazon EC2](http://aws.amazon.com/ec2/). It was
 completely inspired by the [capistrano-ec2group](https://github.com/logandk/capistrano-ec2group) and
@@ -16,8 +13,18 @@ Both of the prior plugins gave you "a way" to deploy using Capistrano to AWS Aut
 required you to do so in a non-straightforward manner by putting your Auto Scaling group in its own
 security group or by providing a unique tag for your Auto Scaling group.  This plugin simply takes the
 name of the Auto Scaling group and uses that to find the Auto Scaling instances that it should deploy to.  It will
-work with straight up hand created Auto Scaling groups (exact match of the AS group name) or with
-Cloud Formation created Auto Scaling groups (looking for the name in the Cloud Formation format).
+work with straight up hand created Auto Scaling groups (exact match of the AS group name).
+### How this works
+This gem will fetch only running instances that have an autoscale tag name you specified
+It will then reject the roles `:db` and the `:primary => true` for all servers found but the first one
+this is to make sure a single working task does not run in parallel
+you end up as if you defined the servers yourself like so:
+
+```ruby
+server ip_address1, :app :db, :web, :primary => true
+server ip_address2, :app, :web
+server ip_address3, :app, :web
+```
 
 ## Installation
 
@@ -81,25 +88,15 @@ set :asgroup_use_private_ips, true
 Simple do this where <my-autoscale-group-name> is the name of an autoscale group, with optional role:
 
 ```ruby
-Capistrano::Asgroup.addInstances("<my-autoscale-group-name>"[, role])
+Capistrano::Asgroup.addInstances("<my-autoscale-group-name>")
 ```
 
-So instead of:
-
-```ruby
-task :production do
-  role :web, 'mysever1.example.com','myserver2.example.com'
-  logger.info 'Deploying to the PRODUCTION environment!'
-end
-```
-
-You would do:
 
 ```ruby
 require 'capistrano/asgroup'
 
 task :production do
-  Asgroup.addInstances("my-asg-name", :web)
+  Asgroup.addInstances("my-asg-name")
   logger.info 'Deploying to the PRODUCTION environment!'
 end
 ```
