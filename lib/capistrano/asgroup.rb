@@ -47,9 +47,9 @@ module Capistrano
             @ec2DescInst = @ec2_api.describe_instances(instance_ids: @asGroupInstanceIds)
 
             # figure out the instance IP's
+            server_as_db_defined = false
             @ec2DescInst[:reservations].each do |reservation| # RESERVATION IS ALWAYS 1???
                 #remove instances that are either not in this asGroup or not in the "running" state # DOES THIS LOGIC FIT???
-                server_as_db_defined = false
                 reservation[:instances].delete_if{ |a| not @asGroupInstanceIds.include?(a[:instance_id]) or a[:state][:name] != "running" }.each do |instance|
                     puts "Found ASG #{which} Instance ID: #{instance[:instance_id]} in VPC: #{instance[:vpc_id]}"
                     options = {
